@@ -39,4 +39,8 @@ public class Graph {
     public Iterable<Integer> getVertices() {
         return adjacencyList.keySet();
     }
+
+    public int getSize() {
+        return adjacencyList.size();
+    }
 }

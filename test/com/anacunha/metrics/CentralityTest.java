@@ -1,6 +1,7 @@
 package com.anacunha.metrics;
 
 import com.anacunha.graph.Graph;
+import com.anacunha.graph.GraphReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,5 +52,19 @@ public class CentralityTest {
         closeness.put(6, (1.0 / 11));
         closeness.put(7, (1.0 / 14));
         assertThat(Centrality.getCloseness(graph), is(closeness));
+    }
+
+    @Test
+    public void testNormalizedCloseness() {
+        graph = GraphReader.readGraph("res/edges_test_2");
+        double maxFarness = 1.0 / (graph.getSize() - 1);
+        Map<Integer, Double> normalizedCloseness = new HashMap<>();
+        normalizedCloseness.put(1, (1.0 / 9) / maxFarness);
+        normalizedCloseness.put(2, (1.0 / 9) / maxFarness);
+        normalizedCloseness.put(3, (1.0 / 9) / maxFarness);
+        normalizedCloseness.put(4, (1.0 / 9) / maxFarness);
+        normalizedCloseness.put(5, (1.0 / 9) / maxFarness);
+        normalizedCloseness.put(6, (1.0 / 5) / maxFarness);
+        assertThat(Centrality.getNormalizedCloseness(graph), is(normalizedCloseness));
     }
 }
