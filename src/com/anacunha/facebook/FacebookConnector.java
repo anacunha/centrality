@@ -14,13 +14,11 @@ import java.util.Map;
 
 public class FacebookConnector {
 
-    private final static String USER_ACCESS_TOKEN = "EAARaQQSmQRQBAGaXSWcV9Yk9fZCNEa641REMg0sEJZBQwgkmKw01czWWoYaPoZBE1h0zwP9QWbrr8fxFuazbB9MrolgnDN1aIZCI2ZC0BLZCSohZB0oZAUcjHYtFZA6W05lbKQg4L8XTw6LrWqjZAWrItCmRx3rEMUJUXhEALTx3tZCwsMj2RIiNTUw";
-
-    public static void main(String[] args) {
+    public static void facebookCentrality(String accessToken) {
 
         Graph<String> graph = new Graph<>();
 
-        FacebookClient facebookClient = new DefaultFacebookClient(USER_ACCESS_TOKEN, Version.VERSION_2_8);
+        FacebookClient facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_8);
         User user = facebookClient.fetchObject("me", User.class);
         Connection<User> userFriends = facebookClient.fetchConnection("me/friends", User.class);
 
@@ -34,10 +32,10 @@ public class FacebookConnector {
 
                 // Retrieving the user's friend's mutual friends
                 JsonObject mutualFriends = facebookClient.fetchObject(friend.getId(),
-                        JsonObject.class, Parameter.with("fields","context.fields(mutual_friends)"));
+                        JsonObject.class, Parameter.with("fields", "context.fields(mutual_friends)"));
                 mutualFriends = mutualFriends.getJsonObject("context").getJsonObject("mutual_friends");
                 JsonArray data = mutualFriends.getJsonArray("data");
-                for(int i = 0 ; i < data.length() ; i++) {
+                for (int i = 0; i < data.length(); i++) {
                     JsonObject mutualFriend = (JsonObject) data.get(i);
                     // Adding an edge between the user's friends and their mutual friends
                     graph.addUndirectedEdge(friend.getName(), mutualFriend.getString("name"));
@@ -46,14 +44,14 @@ public class FacebookConnector {
         }
         while (friendsIterator.hasNext());
 
-        System.out.println("Centrality of Social Graph");
-        System.out.format("\n%-40s%5s%s", "User", "", "Closeness");
+        System.out.println("Centrality of Social Graph\n");
+        System.out.format("%-40s%5s%s\n", "User", "", "Closeness");
 
         Centrality<String> centrality = new Centrality<>();
         for (Map.Entry<String, Double> entry : MapUtil.sortByValue(centrality.getCloseness(graph)).entrySet()) {
             String name = entry.getKey();
             Double closeness = entry.getValue();
-            System.out.format("\n%-40s%5s%f", name, "", closeness);
+            System.out.format("%-40s%5s%f\n", name, "", closeness);
         }
     }
 }
