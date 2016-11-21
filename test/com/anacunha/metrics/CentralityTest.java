@@ -13,11 +13,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CentralityTest {
 
-    private Graph graph;
+    private Centrality<Integer> centrality;
+    private Graph<Integer> graph;
 
     @Before
     public void setUp() {
-        graph = new Graph();
+        centrality = new Centrality<>();
+        graph = new Graph<>();
         graph.addUndirectedEdge(1, 2);
         graph.addUndirectedEdge(1, 3);
         graph.addUndirectedEdge(2, 3);
@@ -38,7 +40,7 @@ public class CentralityTest {
         farness.put(5, 11);
         farness.put(6, 11);
         farness.put(7, 14);
-        assertThat(Centrality.getFarness(graph), is(farness));
+        assertThat(centrality.getFarness(graph), is(farness));
     }
 
     @Test
@@ -51,7 +53,7 @@ public class CentralityTest {
         closeness.put(5, (1.0 / 11));
         closeness.put(6, (1.0 / 11));
         closeness.put(7, (1.0 / 14));
-        assertThat(Centrality.getCloseness(graph), is(closeness));
+        assertThat(centrality.getCloseness(graph), is(closeness));
     }
 
     @Test
@@ -65,6 +67,6 @@ public class CentralityTest {
         normalizedCloseness.put(4, (1.0 / 9) / maxFarness);
         normalizedCloseness.put(5, (1.0 / 9) / maxFarness);
         normalizedCloseness.put(6, (1.0 / 5) / maxFarness);
-        assertThat(Centrality.getNormalizedCloseness(graph), is(normalizedCloseness));
+        assertThat(centrality.getNormalizedCloseness(graph), is(normalizedCloseness));
     }
 }

@@ -14,8 +14,8 @@ public class GraphReader {
      * @param fileName The filename of the file to be read.
      * @return The Graph from the given file.
      */
-    public static Graph readGraph(String fileName) {
-        Graph graph = new Graph();
+    public static Graph<Integer> readGraph(String fileName) {
+        Graph<Integer> graph = new Graph<>();
 
         // Adds an undirected edge for each line in file
         try (Scanner scanner = new Scanner(new File(fileName))) {

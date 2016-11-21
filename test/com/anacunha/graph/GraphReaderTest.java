@@ -8,12 +8,12 @@ import org.junit.Test;
 
 public class GraphReaderTest {
 
-    private Graph expected;
-    private Graph readGraph;
+    private Graph<Integer> expected;
+    private Graph<Integer> readGraph;
 
     @Before
     public void setUp() {
-        expected = new Graph();
+        expected = new Graph<>();
         expected.addUndirectedEdge(1, 2);
         expected.addUndirectedEdge(1, 3);
         expected.addUndirectedEdge(2, 3);

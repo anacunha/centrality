@@ -5,38 +5,38 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Graph {
+public class Graph<T> {
 
-    private Map<Integer, Set<Integer>> adjacencyList;
+    private Map<T, Set<T>> adjacencyList;
 
     public Graph() {
         adjacencyList = new HashMap<>();
     }
 
-    private void addVertex(Integer v1) {
+    private void addVertex(T v1) {
         if (!adjacencyList.containsKey(v1)) {
             adjacencyList.put(v1, new HashSet<>());
         }
     }
 
-    private void addDirectedEdge(Integer v1, Integer v2) {
+    private void addDirectedEdge(T v1, T v2) {
         addVertex(v1);
         adjacencyList.get(v1).add(v2);
     }
 
-    public void addUndirectedEdge(Integer v1, Integer v2) {
+    public void addUndirectedEdge(T v1, T v2) {
         addDirectedEdge(v1, v2);
         addDirectedEdge(v2, v1);
     }
 
-    public Iterable<Integer> getNeighbors(Integer vertex) {
+    public Iterable<T> getNeighbors(T vertex) {
         if (adjacencyList.containsKey(vertex)) {
             return adjacencyList.get(vertex);
         }
         return null;
     }
 
-    public Iterable<Integer> getVertices() {
+    public Iterable<T> getVertices() {
         return adjacencyList.keySet();
     }
 
