@@ -17,7 +17,7 @@ public class Main {
             System.out.println("Rank of Vertices by their Closeness");
             System.out.format("\n%-8s%s", "Vertex ", "Closeness ");
 
-            Centrality<Integer> centrality = new Centrality();
+            Centrality<Integer> centrality = new Centrality<>();
 
             for (Map.Entry<Integer, Double> entry : MapUtil.sortByValue(centrality.getCloseness(g)).entrySet()) {
                 Integer vertex = entry.getKey();
